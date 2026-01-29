@@ -43,4 +43,4 @@ The GPT2 model is a large binary, it'll take an age to download at the venue, yo
 python train.py config/finetune_shakespeare.py
 ```
 
-/.cache/huggingface/hub/models--gpt2/blobs
+Just so you know, on my machine `pytorch` caches this in `/.cache/huggingface/hub/models--gpt2/blobs` (at 0.5GB), so you only need to do the download once.
