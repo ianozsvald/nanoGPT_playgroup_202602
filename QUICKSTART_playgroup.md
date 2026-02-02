@@ -46,3 +46,8 @@ python train.py config/finetune_shakespeare.py
 ```
 
 Just so you know, on my machine `pytorch` caches this in `/.cache/huggingface/hub/models--gpt2/blobs` (at 0.5GB), so you only need to do the download once.
+
+## Additional data
+
+* https://raw.githubusercontent.com/tansaku/comedy_playgroup/refs/heads/main/data/expunations_annotated_full.json
+* Ian's phrack download (via dropbox perhaps? 57mb)

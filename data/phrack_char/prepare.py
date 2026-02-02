@@ -22,6 +22,7 @@ import os
 import pickle
 import requests
 import numpy as np
+import zipfile
 
 # get the dataset
 input_file_path = os.path.join(os.path.dirname(__file__), 'input.zip')
