@@ -86,3 +86,11 @@ python sample.py --init_from=gpt2-xl --start="What is the answer to life, the un
 ```sh
 python sample.py --start=FILE:prompt.txt
 ```
+
+## 4. Caches
+
+### Huggingface model cache for GPT2
+
+```
+~/.cache/huggingface/hub
+```
