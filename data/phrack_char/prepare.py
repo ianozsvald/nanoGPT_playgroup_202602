@@ -1,6 +1,10 @@
 """
 phrack hack/phreak old ezines
 
+The phrack zip should be downloaded from
+https://www.dropbox.com/scl/fi/xwudu49e8ccdc4igt3xnt/playgroup_202602_phrack_input.zip?rlkey=jl02vswhaopn68rebq0v9vm6a&st=1wqw11ar&dl=0
+and then saved as 'input.zip' (it is unzipped at 'get the dataset' below)
+
 download to docs/phrack, then experiment in expt2
 wget -r -nH --no-parent --reject="index.html*" -e robots=off http://www.phrack.org/archives/tgz/
 
