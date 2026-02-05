@@ -52,17 +52,23 @@ Just so you know, on my machine `pytorch` caches this in `/.cache/huggingface/hu
 
 ```
 # Ian needs your ssh key to add it to the account, it is tied to a particular machine
+# https://cloud.lambda.ai/instances A10/H100/A100 Lambda Stack 22.04 No Filesystem No Rules
 # after ssh:
 git clone https://github.com/ianozsvald/nanoGPT_playgroup_202602.git
 python -m venv .venv # needed! else we inherit an out of date ubuntu python library set
 . .venv/bin/activate
 cd nanoGPT_playgroup_202602/
 pip install torch numpy transformers datasets tiktoken wandb tqdm
+[Note GH200 doesn't seem to support pytorch on python 3.10 due to Arm
+pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126 --force-reinstall
+https://discuss.pytorch.org/t/installing-pytorch-on-a-grace-hopper-gh200-node-with-gpu-support/216836
+via google query, seems to solve it]
 python data/shakespeare/prepare.py
 python train.py config/finetune_shakespeare.py
 # 10 seconds later...
 python sample.py --out_dir="out-shakespeare" # maybe add the --start="" param too?
 ```
+
 
 ## Additional data
 
