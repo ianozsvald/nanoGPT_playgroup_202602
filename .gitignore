@@ -10,3 +10,21 @@ __pycache__/
 input.txt
 env/
 venv/
+
+# Output directories
+out*/
+
+# Node.js
+node_modules/
+
+# Video/audio files (large binaries)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.mp3
+*.wav
+
+# Remotion build outputs
+docs/**/out/
+docs/**/build/

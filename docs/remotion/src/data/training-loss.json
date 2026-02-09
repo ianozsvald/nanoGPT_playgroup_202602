@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "model": "gpt2-large",
+    "parameters": "774M",
+    "iterations": 20,
+    "dataset": "shakespeare"
+  },
+  "loss": [
+    { "step": 0, "train": 3.89, "val": 3.89 },
+    { "step": 1, "train": 3.72, "val": null },
+    { "step": 2, "train": 3.58, "val": null },
+    { "step": 3, "train": 3.45, "val": null },
+    { "step": 4, "train": 3.35, "val": null },
+    { "step": 5, "train": 3.28, "val": 3.28 },
+    { "step": 6, "train": 3.22, "val": null },
+    { "step": 7, "train": 3.18, "val": null },
+    { "step": 8, "train": 3.14, "val": null },
+    { "step": 9, "train": 3.11, "val": null },
+    { "step": 10, "train": 3.08, "val": 3.08 },
+    { "step": 11, "train": 3.06, "val": null },
+    { "step": 12, "train": 3.04, "val": null },
+    { "step": 13, "train": 3.03, "val": null },
+    { "step": 14, "train": 3.02, "val": null },
+    { "step": 15, "train": 3.01, "val": 3.01 },
+    { "step": 16, "train": 3.00, "val": null },
+    { "step": 17, "train": 2.99, "val": null },
+    { "step": 18, "train": 2.99, "val": null },
+    { "step": 19, "train": 2.98, "val": null },
+    { "step": 20, "train": 2.98, "val": 2.98 }
+  ]
+}
