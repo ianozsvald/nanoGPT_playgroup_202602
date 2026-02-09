@@ -1,0 +1,428 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="'Courier New', monospace">
+
+  <!-- Dramatic zoom into final val loss point at 12s -->
+  <animate attributeName="viewBox"
+    values="0 0 800 520; 620 262 280 182"
+    keyTimes="0; 1"
+    begin="12s" dur="2.5s" fill="freeze"
+    calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bigGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <radialGradient id="spotlight" cx="95%" cy="68%">
+      <stop offset="0%" stop-color="#1a1a2e" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#1a1a2e" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#1a1a2e" stop-opacity="0.9"/>
+    </radialGradient>
+    <pattern id="scanlines" width="800" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="800" y2="0" stroke="#000" stroke-width="0.5" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .bg { fill: #1a1a2e; }
+
+    /* === TITLE === */
+    .title {
+      fill: #e0e0e0; font-size: 18px; font-weight: bold;
+      opacity: 0;
+      animation: titleIn 2.5s ease-out 0s forwards;
+    }
+    @keyframes titleIn {
+      0%   { opacity: 0; letter-spacing: 10px; fill: #4fc3f7; }
+      50%  { fill: #4fc3f7; }
+      100% { opacity: 1; letter-spacing: 0px; fill: #e0e0e0; }
+    }
+    .subtitle {
+      fill: #777; font-size: 12px; opacity: 0;
+      animation: fadeIn 1.2s ease 1.2s forwards;
+    }
+
+    /* === CHART FRAME === */
+    .grid { stroke: #2d2d4a; stroke-width: 1; }
+    .axis { stroke: #555; stroke-width: 1.5; }
+    .axis-label { fill: #999; font-size: 12px; }
+    .chart-frame { opacity: 0; animation: fadeIn 1.2s ease 1.5s forwards; }
+
+    /* === LEGEND === */
+    .legend { opacity: 0; animation: fadeIn 0.8s ease 2.2s forwards; }
+    .legend-text { fill: #ccc; font-size: 12px; }
+
+    /* === TRAIN LOSS LINE (8s slow draw) === */
+    .train-line {
+      fill: none; stroke: #4fc3f7; stroke-width: 2.5;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 5000; stroke-dashoffset: 5000;
+      animation: draw 8s ease-in-out 2.8s forwards;
+    }
+    .train-glow {
+      fill: none; stroke: #4fc3f7; stroke-width: 9;
+      stroke-linecap: round; stroke-linejoin: round; opacity: 0.1;
+      stroke-dasharray: 5000; stroke-dashoffset: 5000;
+      animation: draw 8s ease-in-out 2.8s forwards;
+    }
+
+    /* === VAL LOSS LINE === */
+    .val-line {
+      fill: none; stroke: #ff8a65; stroke-width: 2.5;
+      stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 3000; stroke-dashoffset: 3000;
+      animation: draw 8s ease-in-out 3s forwards;
+    }
+    .val-glow {
+      fill: none; stroke: #ff8a65; stroke-width: 9;
+      stroke-linecap: round; stroke-linejoin: round; opacity: 0.1;
+      stroke-dasharray: 3000; stroke-dashoffset: 3000;
+      animation: draw 8s ease-in-out 3s forwards;
+    }
+
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* === VAL DOTS (dramatic pop) === */
+    /* 8s draw for 20 iters starting at 2.8s → 0.4s/iter */
+    /* step0=2.8s, step5=4.8s, step10=6.8s, step15=8.8s, step20=10.8s */
+    .val-dot {
+      fill: #ff8a65; opacity: 0;
+      animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .val-dot-ring {
+      fill: none; stroke: #ff8a65; stroke-width: 2; opacity: 0;
+      animation: ringIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .val-ping {
+      fill: none; stroke: #ff8a65; stroke-width: 1.5; opacity: 0;
+      animation: pingOut 1.2s ease-out forwards;
+    }
+
+    .vd0, .vp0 { animation-delay: 2.8s; }
+    .vd1, .vp1 { animation-delay: 4.8s; }
+    .vd2, .vp2 { animation-delay: 6.8s; }
+    .vd3, .vp3 { animation-delay: 8.8s; }
+    .vd4, .vp4 { animation-delay: 10.8s; }
+
+    @keyframes popIn {
+      0%   { opacity: 0; r: 0; }
+      40%  { opacity: 1; r: 6; }
+      70%  { r: 3; }
+      100% { opacity: 1; r: 4; }
+    }
+    @keyframes ringIn {
+      0%   { opacity: 0; r: 0; }
+      40%  { opacity: 0.5; r: 10; }
+      100% { opacity: 0.2; r: 8; }
+    }
+    @keyframes pingOut {
+      0%   { opacity: 0.7; r: 4; stroke-width: 2; }
+      100% { opacity: 0; r: 30; stroke-width: 0.3; }
+    }
+
+    /* === VAL LABELS === */
+    .val-label {
+      fill: #ff8a65; font-size: 11px; opacity: 0;
+      animation: slideUp 0.6s ease forwards;
+    }
+    @keyframes slideUp {
+      0%   { opacity: 0; transform: translateY(5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .vl0 { animation-delay: 3.2s; }
+    .vl1 { animation-delay: 5.2s; }
+    .vl2 { animation-delay: 7.2s; }
+    .vl3 { animation-delay: 9.2s; }
+    .vl4 { animation-delay: 11.2s; }
+
+    /* === FINAL DOT HEARTBEAT (before zoom) === */
+    .final-pulse {
+      fill: none; stroke: #ffd700; stroke-width: 1.5; opacity: 0;
+      animation: heartbeat 0.6s ease-in-out 11.2s 3 forwards;
+    }
+    @keyframes heartbeat {
+      0%   { opacity: 0; r: 5; }
+      50%  { opacity: 0.9; r: 18; }
+      100% { opacity: 0; r: 22; }
+    }
+
+    /* === SPOTLIGHT === */
+    .spotlight-overlay { opacity: 0; }
+  </style>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="520" rx="8"/>
+  <rect width="800" height="520" fill="url(#scanlines)" rx="8"/>
+
+  <!-- Title -->
+  <text class="title" x="400" y="35" text-anchor="middle">GPT-2 Large &#x2014; Shakespeare Finetuning</text>
+  <text class="subtitle" x="400" y="52" text-anchor="middle">774M params &#xb7; 20 iterations &#xb7; lr=3e-5</text>
+
+  <!-- Chart frame -->
+  <g class="chart-frame">
+    <line class="grid" x1="80" y1="136" x2="760" y2="136"/>
+    <line class="grid" x1="80" y1="231" x2="760" y2="231"/>
+    <line class="grid" x1="80" y1="326" x2="760" y2="326"/>
+    <line class="grid" x1="80" y1="421" x2="760" y2="421"/>
+    <line class="grid" x1="250" y1="70" x2="250" y2="440"/>
+    <line class="grid" x1="420" y1="70" x2="420" y2="440"/>
+    <line class="grid" x1="590" y1="70" x2="590" y2="440"/>
+    <line class="axis" x1="80" y1="440" x2="760" y2="440"/>
+    <line class="axis" x1="80" y1="70" x2="80" y2="440"/>
+    <text class="axis-label" x="70" y="140" text-anchor="end">4.0</text>
+    <text class="axis-label" x="70" y="235" text-anchor="end">3.5</text>
+    <text class="axis-label" x="70" y="330" text-anchor="end">3.0</text>
+    <text class="axis-label" x="70" y="425" text-anchor="end">2.5</text>
+    <text class="axis-label" x="80"  y="460" text-anchor="middle">0</text>
+    <text class="axis-label" x="250" y="460" text-anchor="middle">5</text>
+    <text class="axis-label" x="420" y="460" text-anchor="middle">10</text>
+    <text class="axis-label" x="590" y="460" text-anchor="middle">15</text>
+    <text class="axis-label" x="760" y="460" text-anchor="middle">20</text>
+    <text class="axis-label" x="420" y="485" text-anchor="middle">Iteration</text>
+    <text class="axis-label" x="25" y="255" text-anchor="middle" transform="rotate(-90 25 255)">Loss</text>
+  </g>
+
+  <!-- Legend -->
+  <g class="legend">
+    <line x1="600" y1="78" x2="630" y2="78" stroke="#4fc3f7" stroke-width="2.5"/>
+    <text class="legend-text" x="636" y="82">Train Loss</text>
+    <line x1="600" y1="96" x2="630" y2="96" stroke="#ff8a65" stroke-width="2.5"/>
+    <circle cx="615" cy="96" r="3.5" fill="#ff8a65"/>
+    <text class="legend-text" x="636" y="100">Val Loss</text>
+  </g>
+
+  <!-- Scanning cursor line -->
+  <line x1="80" y1="70" x2="80" y2="440" stroke="#4fc3f7" stroke-width="1.5" opacity="0">
+    <animate attributeName="x1" from="80" to="760" begin="2.8s" dur="8s" fill="freeze"/>
+    <animate attributeName="x2" from="80" to="760" begin="2.8s" dur="8s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.35;0.35;0" keyTimes="0;0.01;0.94;1" begin="2.8s" dur="8s" fill="freeze"/>
+  </line>
+  <!-- Cursor glow -->
+  <line x1="80" y1="70" x2="80" y2="440" stroke="#4fc3f7" stroke-width="6" opacity="0" filter="url(#bigGlow)">
+    <animate attributeName="x1" from="80" to="760" begin="2.8s" dur="8s" fill="freeze"/>
+    <animate attributeName="x2" from="80" to="760" begin="2.8s" dur="8s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.15;0.15;0" keyTimes="0;0.01;0.94;1" begin="2.8s" dur="8s" fill="freeze"/>
+  </line>
+
+  <!-- Train loss line -->
+  <polyline class="train-glow" points="80,112.5 114,229.5 148,268.9 182,196.6 216,313.6 250,367.4 284,251.5 318,232.1 352,301.0 386,280.1 420,250.2 454,250.6 488,346.7 522,350.1 556,204.0 590,282.1 624,376.1 658,393.6 692,267.0 726,363.8 760,373.4"/>
+  <polyline class="train-line" points="80,112.5 114,229.5 148,268.9 182,196.6 216,313.6 250,367.4 284,251.5 318,232.1 352,301.0 386,280.1 420,250.2 454,250.6 488,346.7 522,350.1 556,204.0 590,282.1 624,376.1 658,393.6 692,267.0 726,363.8 760,373.4"/>
+
+  <!-- Val loss line -->
+  <polyline class="val-glow" points="80,199.8 250,327.8 420,320.9 590,342.9 760,353.4"/>
+  <polyline class="val-line" points="80,199.8 250,327.8 420,320.9 590,342.9 760,353.4"/>
+
+  <!-- Val loss ping effects -->
+  <circle class="val-ping vp0" cx="80"  cy="199.8" r="4"/>
+  <circle class="val-ping vp1" cx="250" cy="327.8" r="4"/>
+  <circle class="val-ping vp2" cx="420" cy="320.9" r="4"/>
+  <circle class="val-ping vp3" cx="590" cy="342.9" r="4"/>
+  <circle class="val-ping vp4" cx="760" cy="353.4" r="4"/>
+
+  <!-- Val loss dots + rings -->
+  <circle class="val-dot-ring vd0" cx="80"  cy="199.8" r="8"/>
+  <circle class="val-dot vd0"      cx="80"  cy="199.8" r="4"/>
+  <circle class="val-dot-ring vd1" cx="250" cy="327.8" r="8"/>
+  <circle class="val-dot vd1"      cx="250" cy="327.8" r="4"/>
+  <circle class="val-dot-ring vd2" cx="420" cy="320.9" r="8"/>
+  <circle class="val-dot vd2"      cx="420" cy="320.9" r="4"/>
+  <circle class="val-dot-ring vd3" cx="590" cy="342.9" r="8"/>
+  <circle class="val-dot vd3"      cx="590" cy="342.9" r="4"/>
+  <circle class="val-dot-ring vd4" cx="760" cy="353.4" r="8"/>
+  <circle class="val-dot vd4"      cx="760" cy="353.4" r="4"/>
+
+  <!-- Val loss labels -->
+  <text class="val-label vl0" x="90"  y="195">3.664</text>
+  <text class="val-label vl1" x="260" y="323">2.990</text>
+  <text class="val-label vl2" x="430" y="316">3.027</text>
+  <text class="val-label vl3" x="600" y="338">2.911</text>
+  <!-- Step 20 label fades out before zoom -->
+  <text class="val-label vl4" x="740" y="346" text-anchor="end">2.856
+    <animate attributeName="opacity" to="0" begin="12.5s" dur="1s" fill="freeze"/>
+  </text>
+
+  <!-- Final dot golden heartbeat before zoom -->
+  <circle class="final-pulse" cx="760" cy="353.4" r="5"/>
+  <circle class="final-pulse" cx="760" cy="353.4" r="5" style="animation-delay: 11.5s"/>
+
+  <!-- ==================== -->
+  <!--   SPOTLIGHT OVERLAY   -->
+  <!-- ==================== -->
+  <rect class="spotlight-overlay" width="800" height="520" fill="url(#spotlight)">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.71;0.77;0.9;0.95;1"
+      begin="0s" dur="16s" fill="freeze"/>
+  </rect>
+
+  <!-- ==================== -->
+  <!--   CELEBRATION ZONE    -->
+  <!-- (visible after zoom)  -->
+  <!-- ==================== -->
+
+  <!-- Golden burst rings -->
+  <circle cx="760" cy="353.4" r="3" fill="none" stroke="#ffd700" stroke-width="2" opacity="0">
+    <animate attributeName="r" from="3" to="40" begin="14.5s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.9;0" keyTimes="0;0.15;1" begin="14.5s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="stroke-width" from="2.5" to="0.2" begin="14.5s" dur="1.4s" fill="freeze"/>
+  </circle>
+  <circle cx="760" cy="353.4" r="3" fill="none" stroke="#ffd700" stroke-width="2" opacity="0">
+    <animate attributeName="r" from="3" to="55" begin="14.7s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.7;0" keyTimes="0;0.15;1" begin="14.7s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="stroke-width" from="2" to="0.15" begin="14.7s" dur="1.4s" fill="freeze"/>
+  </circle>
+  <circle cx="760" cy="353.4" r="3" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0">
+    <animate attributeName="r" from="3" to="70" begin="14.9s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.5;0" keyTimes="0;0.15;1" begin="14.9s" dur="1.4s" fill="freeze"/>
+    <animate attributeName="stroke-width" from="1.5" to="0.1" begin="14.9s" dur="1.4s" fill="freeze"/>
+  </circle>
+  <!-- White flash ring -->
+  <circle cx="760" cy="353.4" r="3" fill="none" stroke="#fff" stroke-width="3" opacity="0">
+    <animate attributeName="r" from="2" to="30" begin="14.5s" dur="0.8s" fill="freeze"/>
+    <animate attributeName="opacity" values="0;0.6;0" keyTimes="0;0.1;1" begin="14.5s" dur="0.8s" fill="freeze"/>
+    <animate attributeName="stroke-width" from="3" to="0.3" begin="14.5s" dur="0.8s" fill="freeze"/>
+  </circle>
+
+  <!-- Pulsing golden center dot -->
+  <circle cx="760" cy="353.4" r="5" fill="#ffd700" opacity="0" filter="url(#glow)">
+    <animate attributeName="opacity" from="0" to="1" begin="14.5s" dur="0.5s" fill="freeze"/>
+    <animate attributeName="r" values="5;7;5" begin="15s" dur="1.2s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Soft ambient glow -->
+  <circle cx="760" cy="353.4" r="20" fill="#ffd700" opacity="0" filter="url(#bigGlow)">
+    <animate attributeName="opacity" from="0" to="0.15" begin="14.5s" dur="1s" fill="freeze"/>
+    <animate attributeName="r" values="20;25;20" begin="15s" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- "BEST VAL LOSS" label -->
+  <text x="760" y="295" text-anchor="middle" fill="#ffd700" font-size="7" font-weight="bold" opacity="0" letter-spacing="2">
+    BEST VAL LOSS
+    <animate attributeName="opacity" values="0;0;1" keyTimes="0;0.95;1" begin="0s" dur="15.5s" fill="freeze"/>
+  </text>
+
+  <!-- Big "2.856" number -->
+  <text x="760" y="315" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold" opacity="0" filter="url(#glow)">
+    2.856
+    <animate attributeName="opacity" values="0;0;1" keyTimes="0;0.96;1" begin="0s" dur="16s" fill="freeze"/>
+    <animate attributeName="font-size" from="8" to="16" begin="15.3s" dur="0.7s" fill="freeze"
+      calcMode="spline" keySplines="0.175 0.885 0.32 1.275"/>
+  </text>
+
+  <!-- Improvement stat -->
+  <text x="760" y="388" text-anchor="middle" fill="#aaa" font-size="5" opacity="0">
+    &#x25BC; 22% improvement
+    <animate attributeName="opacity" from="0" to="1" begin="16s" dur="0.8s" fill="freeze"/>
+  </text>
+  <text x="760" y="398" text-anchor="middle" fill="#666" font-size="4" opacity="0">
+    3.664 &#x2192; 2.856
+    <animate attributeName="opacity" from="0" to="0.8" begin="16.3s" dur="0.8s" fill="freeze"/>
+  </text>
+
+  <!-- ==================== -->
+  <!--     CONFETTI BURST    -->
+  <!-- ==================== -->
+
+  <!-- Confetti 1: right -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.6s" dur="2s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#ffd700">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="45 -8" begin="14.6s" dur="2s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 2: upper-right -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.65s" dur="1.8s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#4fc3f7">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="35 -35" begin="14.65s" dur="1.8s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 3: up -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.55s" dur="1.9s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#ff8a65">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="5 -42" begin="14.55s" dur="1.9s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 4: upper-left -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.7s" dur="1.7s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#76ff03">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-30 -32" begin="14.7s" dur="1.7s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 5: left -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.62s" dur="2s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#e040fb">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-42 6" begin="14.62s" dur="2s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 6: lower-left -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.58s" dur="1.8s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#ffd700">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-28 30" begin="14.58s" dur="1.8s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 7: down -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.68s" dur="1.9s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#fff">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="8 40" begin="14.68s" dur="1.9s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 8: lower-right -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.4;1" begin="14.63s" dur="1.7s" fill="freeze"/>
+    <rect x="759" y="352" width="1.5" height="3.5" rx="0.5" fill="#4fc3f7">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="32 28" begin="14.63s" dur="1.7s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 9: far upper-right -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.35;1" begin="14.55s" dur="2.2s" fill="freeze"/>
+    <rect x="759" y="352" width="1" height="3" rx="0.5" fill="#ff8a65">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="50 -20" begin="14.55s" dur="2.2s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 10: far left-up -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.35;1" begin="14.72s" dur="2.1s" fill="freeze"/>
+    <rect x="759" y="352" width="1" height="3" rx="0.5" fill="#76ff03">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-48 -15" begin="14.72s" dur="2.1s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 11: far down-right -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.35;1" begin="14.67s" dur="2s" fill="freeze"/>
+    <rect x="759" y="352" width="1" height="3" rx="0.5" fill="#e040fb">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="20 45" begin="14.67s" dur="2s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+  <!-- Confetti 12: far down-left -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.35;1" begin="14.6s" dur="2.1s" fill="freeze"/>
+    <rect x="759" y="352" width="1" height="3" rx="0.5" fill="#fff">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-18 42" begin="14.6s" dur="2.1s" fill="freeze" calcMode="spline" keySplines="0 0 0.15 1"/>
+    </rect>
+  </g>
+
+  <!-- Twinkling stars in zoomed background -->
+  <circle cx="680" cy="290" r="0.8" fill="#fff" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.8;0;0.6;0" keyTimes="0;0.88;0.9;0.93;0.96;1" begin="0s" dur="17s" fill="freeze"/>
+  </circle>
+  <circle cx="830" cy="310" r="0.6" fill="#ffd700" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.7;0;0.5;0.7;0" keyTimes="0;0.9;0.92;0.94;0.96;0.98;1" begin="0s" dur="17s" fill="freeze"/>
+  </circle>
+  <circle cx="710" cy="410" r="0.7" fill="#4fc3f7" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.6;0.9;0" keyTimes="0;0.89;0.91;0.95;1" begin="0s" dur="17s" fill="freeze"/>
+  </circle>
+  <circle cx="850" cy="380" r="0.5" fill="#fff" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.9;0.3;0.8;0" keyTimes="0;0.91;0.93;0.95;0.97;1" begin="0s" dur="17s" fill="freeze"/>
+  </circle>
+  <circle cx="650" cy="360" r="0.6" fill="#e040fb" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.5;0.8;0" keyTimes="0;0.92;0.94;0.97;1" begin="0s" dur="17s" fill="freeze"/>
+  </circle>
+
+</svg>

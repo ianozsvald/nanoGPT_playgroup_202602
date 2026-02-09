@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Courier New', monospace">
+
+  <defs>
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .bg { fill: #1a1a2e; }
+    .title { fill: #e0e0e0; font-size: 24px; font-weight: bold; }
+    .subtitle { fill: #888; font-size: 14px; }
+
+    .loop-box {
+      fill: #2a2a4e;
+      stroke: #4fc3f7;
+      stroke-width: 2;
+      rx: 8;
+    }
+    .loop-label { fill: #e0e0e0; font-size: 13px; text-anchor: middle; }
+
+    .loop-arrow {
+      fill: none;
+      stroke: #4fc3f7;
+      stroke-width: 2;
+      marker-end: url(#arrowhead);
+    }
+
+    .return-arrow {
+      fill: none;
+      stroke: #76ff03;
+      stroke-width: 2;
+      marker-end: url(#arrowheadGreen);
+    }
+    .repeat-label { fill: #76ff03; font-size: 11px; }
+
+    .text-box {
+      fill: #1e1e3a;
+      stroke: #555;
+      stroke-width: 1;
+      rx: 6;
+    }
+    .text-label { fill: #888; font-size: 11px; }
+    .gen-text { fill: #ffd700; font-size: 18px; filter: url(#textGlow); }
+    .cursor { fill: #ffd700; }
+
+    .prob-bar { fill: #4fc3f7; opacity: 0.7; }
+    .prob-label { fill: #888; font-size: 9px; }
+
+    .code-overlay { fill: #76ff03; font-size: 14px; opacity: 0.9; }
+    .code-dim { fill: #888; font-size: 14px; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4fc3f7"/>
+    </marker>
+    <marker id="arrowheadGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#76ff03"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="800" height="450" rx="8"/>
+
+  <text class="title" x="400" y="40" text-anchor="middle">Token Generation</text>
+  <text class="subtitle" x="400" y="62" text-anchor="middle">The autoregressive sampling loop</text>
+
+  <!-- Loop diagram -->
+  <g transform="translate(100, 100)">
+    <rect class="loop-box" x="0" y="20" width="100" height="50"/>
+    <text class="loop-label" x="50" y="50">Context</text>
+
+    <path class="loop-arrow" d="M 105 45 L 145 45"/>
+
+    <rect class="loop-box" x="150" y="20" width="100" height="50"/>
+    <text class="loop-label" x="200" y="50">Predict</text>
+
+    <path class="loop-arrow" d="M 255 45 L 295 45"/>
+
+    <rect class="loop-box" x="300" y="20" width="100" height="50"/>
+    <text class="loop-label" x="350" y="50">Sample</text>
+
+    <path class="loop-arrow" d="M 405 45 L 445 45"/>
+
+    <rect class="loop-box" x="450" y="20" width="100" height="50"/>
+    <text class="loop-label" x="500" y="50">Append</text>
+
+    <path class="return-arrow" d="M 500 75 L 500 100 Q 500 115 485 115 L 65 115 Q 50 115 50 100 L 50 75"/>
+    <text class="repeat-label" x="275" y="130" text-anchor="middle">repeat</text>
+  </g>
+
+  <!-- Probability visualization -->
+  <g transform="translate(620, 120)" opacity="0.8">
+    <text fill="#666" font-size="10" x="0" y="0">next token probs:</text>
+    <rect class="prob-bar" x="0" y="8" width="60" height="12" rx="2"/>
+    <text class="prob-label" x="65" y="18">"T" 0.31</text>
+    <rect class="prob-bar" x="0" y="24" width="35" height="12" rx="2"/>
+    <text class="prob-label" x="65" y="34">"W" 0.18</text>
+    <rect class="prob-bar" x="0" y="40" width="25" height="12" rx="2"/>
+    <text class="prob-label" x="65" y="50">"I" 0.12</text>
+  </g>
+
+  <!-- Generated text display -->
+  <rect class="text-box" x="100" y="260" width="600" height="100" rx="8"/>
+  <text class="text-label" x="110" y="255">Generated output:</text>
+
+  <g transform="translate(120, 310)">
+    <text class="gen-text" x="0" y="0">ROMEO: You're high.</text>
+    <rect class="cursor" x="230" y="-14" width="10" height="18"/>
+  </g>
+
+  <text x="120" y="340" fill="#666" font-size="12">LORIUS: I pray you'll be there.</text>
+
+  <text class="code-overlay" x="400" y="405" text-anchor="middle">model.generate()</text>
+  <text class="code-dim" x="400" y="422" text-anchor="middle">idx = model.generate(idx, max_new_tokens=100)</text>
+
+  <g opacity="0.3">
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 20 L 20 40 M 20 20 L 40 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 20 L 780 40 M 780 20 L 760 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 430 L 20 410 M 20 430 L 40 430"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 430 L 780 410 M 780 430 L 760 430"/>
+  </g>
+
+</svg>

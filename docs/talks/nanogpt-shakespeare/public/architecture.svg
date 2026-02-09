@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Courier New', monospace">
+
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="blockGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a5e"/>
+      <stop offset="100%" stop-color="#2a2a4e"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .bg { fill: #1a1a2e; }
+    .title { fill: #e0e0e0; font-size: 24px; font-weight: bold; }
+    .subtitle { fill: #888; font-size: 14px; }
+
+    .flow-box {
+      fill: url(#blockGrad);
+      stroke: #4fc3f7;
+      stroke-width: 2;
+      rx: 8;
+    }
+    .flow-label { fill: #e0e0e0; font-size: 14px; text-anchor: middle; }
+    .flow-sublabel { fill: #888; font-size: 10px; text-anchor: middle; }
+
+    .arrow {
+      fill: none;
+      stroke: #4fc3f7;
+      stroke-width: 2;
+      marker-end: url(#arrowhead);
+    }
+
+    .inner-box {
+      fill: #2a2a4e;
+      stroke: #ff8a65;
+      stroke-width: 1.5;
+      rx: 4;
+    }
+    .inner-label { fill: #ff8a65; font-size: 11px; text-anchor: middle; }
+
+    .code-hint { fill: #76ff03; font-size: 16px; font-weight: bold; }
+    .code-file { fill: #888; font-size: 12px; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4fc3f7"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="800" height="450" rx="8"/>
+
+  <text class="title" x="400" y="45" text-anchor="middle">GPT Architecture</text>
+  <text class="subtitle" x="400" y="68" text-anchor="middle">The complete forward pass in 5 stages</text>
+
+  <!-- Box 1: Token Input -->
+  <g transform="translate(60, 140)">
+    <rect class="flow-box" width="100" height="60" x="0" y="0"/>
+    <text class="flow-label" x="50" y="35">Token</text>
+    <text class="flow-sublabel" x="50" y="50">"Hello"</text>
+  </g>
+
+  <path class="arrow" d="M 165 170 L 210 170"/>
+
+  <!-- Box 2: Embedding -->
+  <g transform="translate(215, 140)">
+    <rect class="flow-box" width="100" height="60" x="0" y="0"/>
+    <text class="flow-label" x="50" y="30">Embedding</text>
+    <text class="flow-sublabel" x="50" y="45">+ Position</text>
+  </g>
+
+  <path class="arrow" d="M 320 170 L 365 170"/>
+
+  <!-- Box 3: Transformer Blocks -->
+  <g transform="translate(370, 120)">
+    <rect class="flow-box" width="140" height="100" x="0" y="0"/>
+    <text class="flow-label" x="70" y="35">Transformer</text>
+    <text class="flow-sublabel" x="70" y="52">x N blocks</text>
+  </g>
+
+  <path class="arrow" d="M 515 170 L 560 170"/>
+
+  <!-- Box 4: Layer Norm -->
+  <g transform="translate(565, 140)">
+    <rect class="flow-box" width="80" height="60" x="0" y="0"/>
+    <text class="flow-label" x="40" y="35">LN</text>
+  </g>
+
+  <path class="arrow" d="M 650 170 L 695 170"/>
+
+  <!-- Box 5: Output -->
+  <g transform="translate(700, 140)">
+    <rect class="flow-box" width="80" height="60" x="0" y="0"/>
+    <text class="flow-label" x="40" y="30">Output</text>
+    <text class="flow-sublabel" x="40" y="45">logits</text>
+  </g>
+
+  <!-- Transformer block expansion -->
+  <g transform="translate(370, 260)">
+    <text fill="#888" font-size="11" x="70" y="0" text-anchor="middle">Inside each block:</text>
+    <rect class="inner-box" x="0" y="15" width="60" height="40"/>
+    <text class="inner-label" x="30" y="40">Attn</text>
+    <text fill="#888" x="72" y="40" font-size="16">+</text>
+    <rect class="inner-box" x="85" y="15" width="55" height="40"/>
+    <text class="inner-label" x="112" y="40">MLP</text>
+    <path fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3,2"
+          d="M 30 60 L 30 75 L 112 75 L 112 60"/>
+    <text fill="#666" font-size="9" x="71" y="85" text-anchor="middle">residual</text>
+  </g>
+
+  <text class="code-hint" x="400" y="390" text-anchor="middle">~300 lines of Python</text>
+  <text class="code-file" x="400" y="410" text-anchor="middle">model.py</text>
+
+  <g opacity="0.3">
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 20 L 20 40 M 20 20 L 40 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 20 L 780 40 M 780 20 L 760 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 430 L 20 410 M 20 430 L 40 430"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 430 L 780 410 M 780 430 L 760 430"/>
+  </g>
+
+</svg>

@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Courier New', monospace">
+
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bigGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4fc3f7"/>
+      <stop offset="50%" stop-color="#76ff03"/>
+      <stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .bg { fill: #1a1a2e; }
+
+    /* Main title */
+    .main-title {
+      fill: url(#titleGrad);
+      font-size: 48px;
+      font-weight: bold;
+      opacity: 0;
+      animation: titleReveal 1.5s ease 0.5s forwards;
+    }
+    @keyframes titleReveal {
+      0% { opacity: 0; letter-spacing: 20px; }
+      60% { letter-spacing: 5px; }
+      100% { opacity: 1; letter-spacing: 2px; }
+    }
+
+    /* Subtitle */
+    .author {
+      fill: #888;
+      font-size: 18px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s ease 1.8s forwards;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* GitHub link */
+    .github-link {
+      fill: #4fc3f7;
+      font-size: 16px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 2.5s forwards;
+    }
+    .github-icon {
+      fill: #4fc3f7;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 2.5s forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Decorative elements */
+    .deco-line {
+      stroke: #4fc3f7;
+      stroke-width: 2;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLine 1s ease 1.2s forwards;
+    }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+    /* Floating particles */
+    .particle {
+      fill: #4fc3f7;
+      opacity: 0;
+    }
+    .p1 { animation: float 4s ease-in-out 2s infinite; }
+    .p2 { animation: float 5s ease-in-out 2.3s infinite; }
+    .p3 { animation: float 4.5s ease-in-out 2.6s infinite; }
+    .p4 { animation: float 5.5s ease-in-out 2.1s infinite; }
+    .p5 { animation: float 4s ease-in-out 2.8s infinite; }
+
+    @keyframes float {
+      0%, 100% { opacity: 0.3; transform: translateY(0); }
+      50% { opacity: 0.7; transform: translateY(-15px); }
+    }
+
+    /* Code snippet decoration */
+    .code-deco {
+      fill: #555;
+      font-size: 12px;
+      opacity: 0;
+      animation: fadeIn 1s ease 3s forwards;
+    }
+
+    /* Pulsing glow behind title */
+    .title-glow {
+      fill: #4fc3f7;
+      opacity: 0;
+      animation: pulseGlow 3s ease-in-out 1s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.05; transform: scale(1); }
+      50% { opacity: 0.1; transform: scale(1.1); }
+    }
+
+    /* CTA box */
+    .cta-box {
+      fill: none;
+      stroke: #76ff03;
+      stroke-width: 2;
+      rx: 8;
+      opacity: 0;
+      animation: boxPop 0.6s ease 3.5s forwards;
+    }
+    .cta-text {
+      fill: #76ff03;
+      font-size: 14px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease 3.8s forwards;
+    }
+    @keyframes boxPop {
+      0% { opacity: 0; transform: scale(0.9); }
+      70% { transform: scale(1.02); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="450" rx="8"/>
+
+  <!-- Pulsing glow effect -->
+  <ellipse class="title-glow" cx="400" cy="180" rx="200" ry="60" filter="url(#bigGlow)"/>
+
+  <!-- Decorative lines -->
+  <line class="deco-line" x1="200" y1="140" x2="600" y2="140"/>
+  <line class="deco-line" x1="200" y1="220" x2="600" y2="220"/>
+
+  <!-- Main title -->
+  <text class="main-title" x="400" y="195" text-anchor="middle">nanoGPT</text>
+
+  <!-- Author -->
+  <text class="author" x="400" y="260" text-anchor="middle">by Andrej Karpathy</text>
+
+  <!-- GitHub link with icon -->
+  <g transform="translate(400, 310)">
+    <!-- Simple GitHub icon -->
+    <g class="github-icon" transform="translate(-100, -12)">
+      <circle cx="10" cy="10" r="10" fill="none" stroke="#4fc3f7" stroke-width="1.5"/>
+      <path d="M10 2 C5.5 2 2 5.5 2 10 C2 13.5 4.5 16.5 8 17.5 L8 15 C6.5 15.5 6 14 6 14 C5.5 13 5 12.5 5 12.5 C4 12 5 12 5 12 C6 12 6.5 13 6.5 13 C7.5 14.5 9 14 9.5 13.5 C9.5 13 10 12.5 10 12.5 C7.5 12 5 11 5 8 C5 7 5.5 6 6 5.5 C6 5 5.5 4 6 3 C6 3 7 3 8.5 4 C9 4 9.5 4 10 4 C10.5 4 11 4 11.5 4 C13 3 14 3 14 3 C14.5 4 14 5 14 5.5 C14.5 6 15 7 15 8 C15 11 12.5 12 10 12.5 C10.5 13 10.5 13.5 10.5 14 L10.5 17.5 C14 16.5 18 13.5 18 10 C18 5.5 14.5 2 10 2" fill="#4fc3f7"/>
+    </g>
+    <text class="github-link" x="0" y="0" text-anchor="middle">github.com/karpathy/nanoGPT</text>
+  </g>
+
+  <!-- CTA -->
+  <g transform="translate(400, 380)">
+    <rect class="cta-box" x="-100" y="-22" width="200" height="40"/>
+    <text class="cta-text" x="0" y="5" text-anchor="middle">Try it yourself!</text>
+  </g>
+
+  <!-- Floating particles -->
+  <circle class="particle p1" cx="150" cy="150" r="3"/>
+  <circle class="particle p2" cx="650" cy="180" r="2"/>
+  <circle class="particle p3" cx="200" cy="350" r="2.5"/>
+  <circle class="particle p4" cx="600" cy="320" r="2"/>
+  <circle class="particle p5" cx="100" cy="280" r="3"/>
+
+  <!-- Code decoration -->
+  <text class="code-deco" x="50" y="420">python train.py</text>
+  <text class="code-deco" x="650" y="420">python sample.py</text>
+
+  <!-- Corner decorations -->
+  <g opacity="0.3">
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 20 L 20 50 M 20 20 L 50 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 20 L 780 50 M 780 20 L 750 20"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 20 430 L 20 400 M 20 430 L 50 430"/>
+    <path fill="none" stroke="#4fc3f7" stroke-width="1" d="M 780 430 L 780 400 M 780 430 L 750 430"/>
+  </g>
+
+</svg>

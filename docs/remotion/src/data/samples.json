@@ -1,0 +1,22 @@
+{
+  "samples": [
+    {
+      "id": 1,
+      "text": "ROMEO:\nYou're high."
+    },
+    {
+      "id": 2,
+      "text": "LORIUS:\nI am not a man of blood, but a man of love.\nI am not a man of war, but a man of peace."
+    },
+    {
+      "id": 3,
+      "text": "PRINCETON:\nWhat say you to this? Is it not strange\nThat we should speak of things we cannot see?"
+    },
+    {
+      "id": 4,
+      "text": "ROMEO:\nThe world is full of madness, and I am but\nA fool who speaks the truth in riddles."
+    }
+  ],
+  "inventedCharacters": ["LORIUS", "PRINCETON"],
+  "realCharacters": ["ROMEO", "JULIET", "HAMLET"]
+}
