@@ -78,3 +78,12 @@ python sample.py --out_dir="out-shakespeare" # maybe add the --start="" param to
 * python - start with 'def lev' or 'hello'
 * math_data_char - simple multiplication
   * `python sample.py --out_dir=out-math-data-char --start="3 * 5 "` (note can't add equals symbol, it borks!)
+
+## Addition by Ben
+
+```
+    Add docs/ with Remotion video generation projects for creating explainer videos
+    Add video/ with SVG assets and talking notes
+    Add .claude/skills/ for Remotion best practices (project-scoped Claude skills)
+    Update .gitignore to ignore output dirs, node_modules, and media binaries
+```
