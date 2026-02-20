@@ -20,7 +20,7 @@ wandb_run_name = 'mini-gpt'
 dataset = 'shakespeare_char'
 gradient_accumulation_steps = 1
 batch_size = 64
-block_size = 11 # context of up to 11 previous characters, bbycroft uses T (time) as 11
+block_size = 11 # T # context of up to 11 previous characters, bbycroft uses T (time) as 11
 
 # baby GPT model :)
 n_layer = 3 # 3 repeating blocks are shown as Transformer 0, 1, 2, in code these are Blocks
@@ -30,10 +30,10 @@ dropout = 0.2 # maybe not used on bbycroft?
 
 # code references
 # 0.09M parameters, close to bbycroft's 85k, but their vocab is smaller
-# Token Embed == wte (top of image, GPT.__init__)
-# Position Embed == wpe (top of image, GPT.__init__)
-# Layer Norm (TxC) is ln_f (, GPT.__init__) ??
-# ?? is lm_head ??
+# Token Embed == wte (top of image, GPT.__init__, (vocab_size(65), n_embd(48)))
+# Position Embed == wpe (top of image, GPT.__init__, (block_size(11), n_embd(48)))
+# Layer Norm (TxC) is ln_f (embed(48) * bias (False))
+
 # At the top of the image, the Token Embed + Position Embed -> Input Embed occurs in GPT.forward with tok_emb+pos_emb
 # Next the 3 Layers are computed, this is in GPT.forward as the loop on x=block(x)
 #  Each Layer has Self Attention (C) into a Layer Norm (TxC) and then MLP into a Layer Norm
@@ -41,6 +41,10 @@ dropout = 0.2 # maybe not used on bbycroft?
 #  Block.forward creates x=x+CausalSelfAttention(ln_1(x)), x=x+MLP(ln_2(x))
 #  Each CausalSelfAttention contains the k/v/q matrices
 # After the 3 layers, the LayerNorm is calculed in GPT.forward as self.transformer.ln_f(x)
+
+# lm_head is the final linear layer that projects the hidden state to the vocabulary size
+# equivalent to LM Head Weights in bbycroft
+# lm_head = nn.Linear(config.n_embd(48), config.vocab_size(65), bias=False)
 
 learning_rate = 1e-3 # with baby networks can afford to go a bit higher
 max_iters = 5000

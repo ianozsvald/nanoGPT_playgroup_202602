@@ -101,7 +101,10 @@ class Block(nn.Module):
         self.mlp = MLP(config)
 
     def forward(self, x):
+        # bbycrof shows Attention Residual, adding previous layer
+        # to the attn output
         x = x + self.attn(self.ln_1(x))
+        # bbycroft shows MLP Residual, MLP Result + previous layer
         x = x + self.mlp(self.ln_2(x))
         return x
 
