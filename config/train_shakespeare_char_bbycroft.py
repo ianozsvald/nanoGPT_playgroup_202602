@@ -5,7 +5,7 @@
 # https://bbycroft.net/llm
 # where the nanoGPT diagram and walkthrough looks very similar to what we have here
 
-out_dir = 'out-shakespeare-char'
+out_dir = 'out-shakespeare-char-bbycroft'
 eval_interval = 250 # keep frequent because we'll overfit
 eval_iters = 200
 log_interval = 10 # don't print too too often
